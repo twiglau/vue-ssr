@@ -1,0 +1,11 @@
+1、初始化项目
+npm init
+
+2、安装
+npm i webpack vue vue-loader
+
+3、安装
+npm i css-loader ajv vue-template-compiler
+
+4、安装
+npm i style-loader url-loader file-loader
