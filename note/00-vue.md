@@ -11,4 +11,14 @@
 }
 ```
 
-# 
+# eslint没有办法直接识别.vue文件里面的代码,这时需要安装工具,来支持.vue
+```
+eslint-plugin-html
+
+// package.json 文件里面
+"lint":"eslint --ext .js --ext .jsx --ext .vue client/",
+// -ext 指定文件格式  client/ 文件夹下的文件
+
+//命令修复eslint检测的错误
+"lint-fix": "eslint --fix --ext .js --ext .jsx --ext .vue client/",
+```
