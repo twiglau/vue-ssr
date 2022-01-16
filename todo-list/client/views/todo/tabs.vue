@@ -17,40 +17,40 @@
 
 <script>
     export default {
-        props: {
-            filter: {
-                type: String,
-                required: true
-            },
-            todos:{
-                type: Array,
-                required: true
-            },
+      props: {
+        filter: {
+          type: String,
+          required: true
         },
-        name: "tabs",
-        data() {
-            return {
-                states: [
-                    'all',
-                    'active',
-                    'completed'
-                ]
-            }
-        },
-        computed:{
-            unFinishedTodoLength() {
-                // 如果 !todo.completed 的todo 就是我们想要filter的结果
-                return this.todos.filter(todo => !todo.completed).length;
-            }
-        },
-        methods: {
-            toggleFilter(state) {
-                this.$emit('toggle', state);
-            },
-            clearAllCompleted() {
-                this.$emit('clearAllCompleted')
-            }
+        todos: {
+          type: Array,
+          required: true
         }
+      },
+      name: 'tabs',
+      data () {
+        return {
+          states: [
+            'all',
+            'active',
+            'completed'
+          ]
+        }
+      },
+      computed: {
+        unFinishedTodoLength () {
+          // 如果 !todo.completed 的todo 就是我们想要filter的结果
+          return this.todos.filter(todo => !todo.completed).length
+        }
+      },
+      methods: {
+        toggleFilter (state) {
+          this.$emit('toggle', state)
+        },
+        clearAllCompleted () {
+          this.$emit('clearAllCompleted')
+        }
+      }
     }
 </script>
 

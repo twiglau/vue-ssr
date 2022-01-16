@@ -19,52 +19,52 @@
 </template>
 
 <script>
-    import Item from "./item.vue";
-    import Tabs from "./tabs.vue";
+    import Item from './item.vue'
+import Tabs from './tabs.vue'
 
-    let id = 0;
+let id = 0
 
-    export default {
-        name: "todo",
-        data(){
-            return{
-                todos:[],
-                filter: 'all'
-            }
-        },
-        components:{
-            Item,
-            Tabs,
-        },
-        computed:{
-            filteredTodos(){
-                if (this.filter === 'all') {
-                    return this.todos;
-                }
-                const completed = this.filter === 'completed';
-                return this.todos.filter(todo => completed === todo.completed);
-            }
-        },
-        methods:{
-            addTodo(e){
-                this.todos.unshift({
-                    id:id++,
-                    content: e.target.value.trim(),
-                    completed: false
-                })
-                e.target.value = '';
-            },
-            deleteTodo(id) {
-                //传进去的是每一个todo 判断一下 todo.id===id 就是我们想要的结果
-                this.todos.splice(this.todos.findIndex(todo=>todo.id===id),1)
-            },
-            toggleFilter(state){
-                this.filter = state;
-            },
-            clearAllCompleted(){
-                this.todos = this.todos.filter(todo => !todo.completed);
-            }
+export default {
+      name: 'todo',
+      data () {
+        return {
+          todos: [],
+          filter: 'all'
         }
+      },
+      components: {
+        Item,
+        Tabs
+      },
+      computed: {
+        filteredTodos () {
+          if (this.filter === 'all') {
+            return this.todos
+          }
+          const completed = this.filter === 'completed'
+          return this.todos.filter(todo => completed === todo.completed)
+        }
+      },
+      methods: {
+        addTodo (e) {
+          this.todos.unshift({
+            id: id++,
+            content: e.target.value.trim(),
+            completed: false
+          })
+          e.target.value = ''
+        },
+        deleteTodo (id) {
+          // 传进去的是每一个todo 判断一下 todo.id===id 就是我们想要的结果
+          this.todos.splice(this.todos.findIndex(todo => todo.id === id), 1)
+        },
+        toggleFilter (state) {
+          this.filter = state
+        },
+        clearAllCompleted () {
+          this.todos = this.todos.filter(todo => !todo.completed)
+        }
+      }
     }
 </script>
 
