@@ -3,5 +3,11 @@
     "plugins":[
         "html"
     ],
-    "parser":"babel-eslint"
+    "parser":"babel-eslint",
+    "rules":{
+      "no-new":"off",
+      "quotes":"off",
+      "semi":"off",
+      "comma-dangle":"off"
+    }
 }
