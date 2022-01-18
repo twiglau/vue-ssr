@@ -3,7 +3,8 @@
         <div id="cover">
         </div>
         <Header></Header>
-        <Todo></Todo>
+        <!-- <Todo></Todo> -->
+        <router-view />
         <Footer></Footer>
     </div>
 
@@ -13,7 +14,7 @@
 import Header from './layout/header.vue'
 import Footer from './layout/footer.jsx'
 import Todo from './views/todo/todo.vue'
-console.log(Header.__docs)
+// console.log(Header.__docs) // 自定义loader
 export default {
   components: {
     Header,
