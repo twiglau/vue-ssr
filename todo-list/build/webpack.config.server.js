@@ -14,7 +14,7 @@ config = merge(baseConfig, {
   devtool: 'source-map',
   output: {
     libraryTarget: 'commonjs2', // 指定打包后的代码, 入口是怎样一种规范  module.exports | require
-    fileName: 'server-entry.js',
+    filename: 'server-entry.js',
     path: path.join(__dirname, '../server-build'),
   },
   // 1. webpack 打包时,会把我们所有依赖的js文件都给打包到同一个javascript文件当中 -> 这是在浏览器当中的情况
