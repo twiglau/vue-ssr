@@ -42,14 +42,15 @@ const handleSSR = async (ctx) => {
   }
   // 需要一个模板来生成html ejs 模板引擎渲染 html
   const template = fs.readFileSync(
-    path.join(__dirname, '../server/server.template.ejs')
+    path.join(__dirname, '../server.template.ejs'),
+    'utf-8'
   )
   // 需要获取webpack帮我们打包出来 javaScript 文件的地址
   // 问题:从webpack-dev-server中获取js文件到当前 node 环境下(server)
   // 可以向 webpack-dev-server 发送一个请求拿到 打包的文件
   // vue-ssr-client-manifest.json 文件需要插件来生成: vue-server-renderer/client-plugin
   const clientManifestResp = await axios.get(
-    'http://127.0.0.1:8080/vue-ssr-client-manifest.json'
+    'http://127.0.0.1:8000/public/vue-ssr-client-manifest.json'
   )
   const clientManifest = clientManifestResp.data
   // 声明一个 render

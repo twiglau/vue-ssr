@@ -1,8 +1,8 @@
-import { createApp } from './create-app'
+import createApp from './create-app'
 
 export default context => {
   return new Promise((resolve, reject) => {
-    const {app, router} = createApp
+    const {app, router} = createApp()
 
     router.push(context.url)
     router.onReady(() => {
