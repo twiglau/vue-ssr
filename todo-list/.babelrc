@@ -1,9 +1,10 @@
 {
   "presets": [
-    "env"
+    "env",
+    "stage-1" // 支持 ...mapState 等高级语法
   ],
   "plugins": [
     "transform-vue-jsx",
-    "syntax-dynamic-import"
+    "syntax-dynamic-import" // 支持动态引入 () => import('../views/todo')
   ]
 }

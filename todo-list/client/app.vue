@@ -4,7 +4,9 @@
         </div>
         <Header></Header>
         <!-- <Todo></Todo> -->
-        <router-view />
+        <transition name="fade" mode="out-in">
+          <router-view />
+        </transition>
         <Footer></Footer>
     </div>
 
