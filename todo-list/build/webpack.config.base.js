@@ -11,8 +11,8 @@ const config = {
     entry: path.join(__dirname, '../client/client-entry.js'),
     output: {
         filename: "bundle.[hash:8].js",
-        path: path.join(__dirname, '../dist'),
-        // webpack-dev-sever 加上全路径,让 node 服务器下也能访问到
+        path: path.join(__dirname, '../public'),
+        // webpack-dev-sever 加上全路径,让 node 服务器下也能访问到,测试时,正式环境需要更改
         publicPath: 'http://127.0.0.1:8000/public/'
     },
     module: {

@@ -1,8 +1,8 @@
 const Koa = require('koa')
-const pageRouter = require('./routers/dev-ssr')
 const app = new Koa()
 const send = require('koa-send') // 处理些静态资源
 const path = require('path')
+const staticRouter = require('./routers/prod-static')
 const isDev = process.env.NODE_ENV === 'development'
 
 app.use(async (ctx, next) => {
@@ -26,6 +26,14 @@ app.use(async (ctx, next) => {
     await next()
   }
 })
+app.use(staticRouter.routes()).use(staticRouter.allowedMethods())
+
+let pageRouter
+if (isDev) {
+  pageRouter = require('./routers/dev-ssr')
+} else {
+  pageRouter = require('./routers/prod-ssr')
+}
 app.use(pageRouter.routes()).use(pageRouter.allowedMethods())
 
 const HOST = process.env.HOST || '0.0.0.0'

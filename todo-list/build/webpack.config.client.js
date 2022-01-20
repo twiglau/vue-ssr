@@ -82,7 +82,8 @@ if (isDev) {
             vendor:['vue']
         },
         output: {
-            filename:'[name].[chunkhash:8].js'
+            filename:'[name].[chunkhash:8].js',
+            publicPath:'/public/', //需要更改引用路径,在正式环境中. 并且在server需要对资源路径进行处理 static.js
         },
         module: {
             rules:[
