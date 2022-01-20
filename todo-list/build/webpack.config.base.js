@@ -8,11 +8,12 @@ const config = {
     //目标
     target: "web",
     //入口
-    entry: path.join(__dirname, '../client/index.js'),
+    entry: path.join(__dirname, '../client/client-entry.js'),
     output: {
         filename: "bundle.[hash:8].js",
         path: path.join(__dirname, '../dist'),
-        publicPath: '/public/'
+        // webpack-dev-sever 加上全路径,让 node 服务器下也能访问到
+        publicPath: 'http://127.0.0.1:8000/public/'
     },
     module: {
         rules: [

@@ -8,10 +8,12 @@ module.exports = async (ctx, renderer, template) => {
   const context = { url: ctx.path }
   try {
     const appString = await renderer.renderToString(context)
+    const { title } = context.meta.inject()
     const html = ejs.render(template, {
       appString,
       style: context.renderStyles(), // 带有 style 标签的所有样式
-      scripts: context.renderScripts()
+      scripts: context.renderScripts(),
+      title: title.text()
     })
 
     ctx.body = html

@@ -2,7 +2,7 @@
     <div id="app">
         <div id="cover">
         </div>
-        <Header></Header>
+        <a-header></a-header>
         <!-- <Todo></Todo> -->
         <transition name="fade" mode="out-in">
           <router-view />
@@ -13,13 +13,16 @@
 </template>
 
 <script>
-import Header from './layout/header.vue'
+import AHeader from './layout/header.vue'
 import Footer from './layout/footer.jsx'
 import Todo from './views/todo/todo.vue'
 // console.log(Header.__docs) // 自定义loader
 export default {
+  metaInfo: {
+    title: 'JoJo\'s Todo App'
+  },
   components: {
-    Header,
+    AHeader,
     Footer,
     Todo
   },

@@ -1,7 +1,8 @@
 const Koa = require('koa')
 const pageRouter = require('./routers/dev-ssr')
 const app = new Koa()
-
+const send = require('koa-send') // 处理些静态资源
+const path = require('path')
 const isDev = process.env.NODE_ENV === 'development'
 
 app.use(async (ctx, next) => {
@@ -16,6 +17,13 @@ app.use(async (ctx, next) => {
     } else {
       ctx.body = 'please try again later'
     }
+  }
+})
+app.use(async (ctx, next) => {
+  if (ctx.path === '/favicon.ico') {
+    await send(ctx, '/favicon.ico', {root: path.join(__dirname, '../')})
+  } else {
+    await next()
   }
 })
 app.use(pageRouter.routes()).use(pageRouter.allowedMethods())
