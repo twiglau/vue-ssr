@@ -52,9 +52,8 @@ router.beforeResolve((to, from, next) => {
   next()
 })
 router.afterEach((to, from) => {
-  console.log('afterEach invoked')
+  console.log('afterEach invoked !!')
 })
-
 // 不需要手动创建节点
 // const root = document.createElement('div')
 // document.body.appendChild(root)

@@ -26,6 +26,7 @@ const devServer = {
     overlay:{
         errors:true,
     },
+    headers: { 'Access-Control-Allow-Origin': '*'},
     historyApiFallback: {
       // 1. 路径与 base.js 里面 output 的 publicPath 有关系, publicPath 作为基路径
       // 如果 publicPath: '/public/', 那么 index: '/public/index.html'

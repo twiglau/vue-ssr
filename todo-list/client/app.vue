@@ -7,7 +7,9 @@
         <transition name="fade" mode="out-in">
           <router-view />
         </transition>
-        <Footer></Footer>
+        <Footer>
+        </Footer>
+        <button @click="clickMe">Click Me!!</button>
     </div>
 
 </template>
@@ -29,7 +31,21 @@ export default {
   data () {
     return {
     }
-  }
+  },
+  mounted () {
+    this.$notify({
+      content: 'test $notify',
+      btn: 'close'
+    })
+  },
+  methods: {
+    clickMe () {
+      this.$notify({
+        content: 'Click Me!',
+        btn: 'close'
+      })
+    }
+  },
 }
 </script>
 
