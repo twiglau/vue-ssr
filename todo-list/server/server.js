@@ -2,8 +2,14 @@ const Koa = require('koa')
 const app = new Koa()
 const send = require('koa-send') // 处理些静态资源
 const path = require('path')
+const koaBody = require('koa-body')
 const staticRouter = require('./routers/prod-static')
+const apiRouter = require('./routers/api')
+const createDb = require('./db/db')
+const config = require('../app.config')
+
 const isDev = process.env.NODE_ENV === 'development'
+const db = createDb(config.db.appId, config.db.appKey)
 
 app.use(async (ctx, next) => {
   try {
@@ -19,6 +25,11 @@ app.use(async (ctx, next) => {
     }
   }
 })
+
+app.use(async (ctx, next) => {
+  ctx.db = db
+  await next()
+})
 app.use(async (ctx, next) => {
   if (ctx.path === '/favicon.ico') {
     await send(ctx, '/favicon.ico', {root: path.join(__dirname, '../')})
@@ -26,7 +37,9 @@ app.use(async (ctx, next) => {
     await next()
   }
 })
+app.use(koaBody())
 app.use(staticRouter.routes()).use(staticRouter.allowedMethods())
+app.use(apiRouter.routes(), apiRouter.allowedMethods())
 
 let pageRouter
 if (isDev) {
