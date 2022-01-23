@@ -38,6 +38,12 @@ const devServer = {
       // 3. history 模式下, 默认情况下, 路径到服务端,会先做一个匹配处理,然后完成真正请求操作
       index: '/public/index.html'
     },
+    // Uncaught (in promise) Error: Request failed with status code 404
+    // http://localhost:8000/api/todos 404
+    proxy: {
+      '/api': 'http://127.0.0.1:3333',
+      '/user': 'http://127.0.0.1:3333'
+    },
     hot:true
 }
 let config
