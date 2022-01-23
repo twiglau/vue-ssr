@@ -1,10 +1,35 @@
 {
   "presets": [
-    "env",
+    // "env", // 该 env 是个插件
     "stage-1" // 支持 ...mapState 等高级语法
   ],
   "plugins": [
     "transform-vue-jsx",
     "syntax-dynamic-import" // 支持动态引入 () => import('../views/todo')
-  ]
+  ],
+  // 这个env 是 babel 的默认配置项,根据不同环境,提供不同的默认的配置
+  "env": {
+    "browser": {
+      "presets": [
+        [
+          "env", {
+            "targets": {
+              "browsers": ["last 2 versions", "safari >= 7"]
+            }
+          }
+        ]
+      ]
+    },
+    "node": {
+      "presets": [
+        [
+          "env", {
+            "targets": {
+              "node": "current"
+            }
+          }
+        ]
+      ]
+    }
+  }
 }

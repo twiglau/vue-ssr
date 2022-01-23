@@ -62,7 +62,19 @@ export default {
     }
   },
   mounted () {
-    this.fetchTodos()
+    if (this.todos && this.todos.length < 1) {
+      this.fetchTodos()
+    }
+  },
+  asyncData ({ store, router }) {
+    // TIPS: 服务端渲染,从服务发送的请求. 如果依赖的是 client-model , baseURL是 / 的话,
+    // 默认服务端是没有同域这个概念的, 服务端发送请求必须指定 host port
+    // 服务端发送请求,并不需要发送请求来做
+    if (store.state.user) {
+      return store.dispatch('fetchTodos')
+    }
+    router.replace('/login')
+    return Promise.resolve()
   },
   methods: {
     ...mapActions([

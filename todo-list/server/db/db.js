@@ -27,6 +27,10 @@ module.exports = (appId, appKey) => {
     }
   }
   return {
+    // async 函数 babel 编译时, 会生成 generator 函数
+    // ReferenceError: regeneratorRuntime is not defined, 在server 环境下
+    // 可以设置 babelrc 根据不同环境,做相应的配置
+
     async getAllTodos () {
       return handleRequest(await request.get(`/${className}`, {
         headers: getHeaders()
@@ -34,27 +38,27 @@ module.exports = (appId, appKey) => {
     },
     async addTodo (todo) {
       return handleRequest(await request.post(`/${className}`,
-      todo,
-      {
-        headers: getHeaders()
-      }))
+        todo,
+        {
+          headers: getHeaders()
+        }))
     },
-    async updateTodo(id, todo) {
+    async updateTodo (id, todo) {
       return handleRequest(await request.put(`/${className}/${id}`,
-      todo,
-      {
-        headers: getHeaders()
-      }
+        todo,
+        {
+          headers: getHeaders()
+        }
       ))
     },
-    async deleteTodo(id) {
+    async deleteTodo (id) {
       return handleRequest(await request.delete(`/${className}/${id}`,
-      {
-        headers: getHeaders()
-      }
+        {
+          headers: getHeaders()
+        }
       ))
     },
-    async deleteCompleted(ids) {
+    async deleteCompleted (ids) {
       const requests = ids.map(id => {
         return {
           method: 'DELETE',

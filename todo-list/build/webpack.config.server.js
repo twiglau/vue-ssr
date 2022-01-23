@@ -67,8 +67,15 @@ config = merge(baseConfig, {
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
       'process.env.VUE_ENV': '"server"' // vue的服务端渲染,官方建议这么去做的
     }),
-    new VueServerPlugin()
+    new VueServerPlugin(), // 对应 dev-ssr.js 通过 bundle 方式构建. dev-srr-no-bundle 不需要该插件
   ])
 })
 
+
+config.resolve = {
+  alias: {
+    // 指明 import model 时,实际上指定的是哪个文件
+    'model': path.join(__dirname, '../client/model/server-model.js')
+  }
+}
 module.exports = config

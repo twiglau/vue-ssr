@@ -123,5 +123,10 @@ if (isDev) {
         ])
     })
 }
-
+config.resolve = {
+  alias: {
+    // 指明 import model 时,实际上指定的是哪个文件
+    'model': path.join(__dirname, '../client/model/client-model.js')
+  }
+}
 module.exports = config;

@@ -1,4 +1,8 @@
-import model from '../../model/client-model'
+/**
+ * webpack 指定了 model 的 alias, 通过不同的环境引用不同的模块
+ */
+// import model from '../../model/client-model'
+import model from 'model'
 import notify from '../../components/notification/function'
 import bus from '../../util/bus'
 const handleErr = (err) => {
@@ -22,7 +26,7 @@ export default {
   },
   fetchTodos ({commit}) {
     commit('startLoading')
-    model.getAllTodos().then(data => {
+    return model.getAllTodos().then(data => {
       commit('fillTodos', data)
       commit('endLoading')
     }).catch(err => {

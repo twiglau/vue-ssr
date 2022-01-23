@@ -2,7 +2,10 @@ import createApp from './create-app'
 
 export default context => {
   return new Promise((resolve, reject) => {
-    const {app, router} = createApp()
+    const {app, router, store} = createApp()
+    if (context.user) {
+      store.state.user = context.user
+    }
 
     router.push(context.url)
     router.onReady(() => {
@@ -12,8 +15,23 @@ export default context => {
       if (matchedComponents.length === 0) {
         return reject(new Error('no component matched'))
       }
-      context.meta = app.$meta()
-      resolve(app)
+      // 匹配到这个组件后, 就可以调用组件内的方法
+      Promise.all(matchedComponents.map(component => {
+        if (component.asyncData) {
+          return component.asyncData({
+            route: router.currentRoute,
+            router,
+            store
+          })
+        }
+      })).then(data => {
+        console.log('asyncData: ', store.state)
+
+        context.meta = app.$meta()
+        context.state = store.state
+        context.router = router
+        resolve(app)
+      })
     })
   })
 }

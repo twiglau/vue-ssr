@@ -11,7 +11,7 @@ export default [
   },
   {
     path: '/app',
-    component: Todo,
+    component: Todo, // 注意如果异步加载,会导致 dev-ssr-no-bundle 从硬盘 (执行js环境) 读取 server-entry 时,报错
     name: 'app',
     meta: {
       title: 'This a title',

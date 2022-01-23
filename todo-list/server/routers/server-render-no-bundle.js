@@ -1,5 +1,5 @@
 const ejs = require('ejs')
-module.exports = async (ctx, renderer, template) => {
+module.exports = async (ctx, renderer, template, bundle) => {
   ctx.headers['content-type'] = 'text/html'
   // context 作用: 是用在服务端渲染时,作为参数传入[vue-server-renderer]进去的
   // vue-server-renderer 渲染完成后,会插入一堆的属性,这些属性可以很方便地让我们来渲染HTML
@@ -7,16 +7,19 @@ module.exports = async (ctx, renderer, template) => {
   // 会在里面生成 style 标签,会有当前 url 路由下所需样式的内容,可以直接渲染HTML上面
   const context = { url: ctx.path, user: ctx.session.user }
   try {
-    const appString = await renderer.renderToString(context)
+    const app = await bundle(context)
+    if (context.router.currentRoute.fullPath !== ctx.path) {
+      return ctx.redirect(context.router.currentRoute.fullPath)
+    }
+    const appString = await renderer.renderToString(app, context)
+    // const appString = await renderer.renderToString(context)
     // 在 todo.vue asyncData 中, replace('/login') 页面
     // 判断需要做 redirect 在 server-entry context 中已经知道需要做跳转,
     // 但是我们要 renderToString 服务端中最花费时间后,才做跳转
     // 以上原因是: 我们使用了 dev-ssr 中 createBundleRenderer 方法
 
     // 要解决以上问题: 可以通过 createRenderer 去做, 不需要 bundle, 能更好控制 context
-    if (context.router.currentRoute.fullPath !== ctx.path) {
-      return ctx.redirect(context.router.currentRoute.fullPath)
-    }
+
     const { title } = context.meta.inject()
     const html = ejs.render(template, {
       appString,
