@@ -8,6 +8,9 @@ bin-release/
 .settings/
 node_modules
 dist
+public
+server-build
+
 # Executables
 *.swf
 *.air
