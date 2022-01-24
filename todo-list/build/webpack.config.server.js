@@ -4,9 +4,18 @@ const merge = require('webpack-merge')
 const ExtractPlugin = require('extract-text-webpack-plugin');
 const baseConfig = require('./webpack.config.base')
 const VueServerPlugin = require('vue-server-renderer/server-plugin')
-const defaultPluins = []
-
+const plugins = [
+  new ExtractPlugin('styles.[contentHash:8].css'),
+  new webpack.DefinePlugin({
+    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+    'process.env.VUE_ENV': '"server"' // vue的服务端渲染,官方建议这么去做的
+  }),
+]
 let config
+const isDev = process.env.NODE_ENV === 'development'
+if (isDev) {
+  plugins.push(new VueServerPlugin()) // 对应 dev-ssr.js 通过 bundle 方式构建. dev-srr-no-bundle 不需要该插件
+}
 
 config = merge(baseConfig, {
   target: 'node', // 必须指定打包目标是 node 端环境
@@ -61,16 +70,8 @@ config = merge(baseConfig, {
       }
     ]
   },
-  plugins: defaultPluins.concat([
-    new ExtractPlugin('styles.[contentHash:8].css'),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
-      'process.env.VUE_ENV': '"server"' // vue的服务端渲染,官方建议这么去做的
-    }),
-    new VueServerPlugin(), // 对应 dev-ssr.js 通过 bundle 方式构建. dev-srr-no-bundle 不需要该插件
-  ])
+  plugins
 })
-
 
 config.resolve = {
   alias: {

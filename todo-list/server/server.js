@@ -46,16 +46,16 @@ app.use(async (ctx, next) => {
   }
 })
 app.use(koaBody())
-app.use(staticRouter.routes()).use(staticRouter.allowedMethods())
 app.use(apiRouter.routes(), apiRouter.allowedMethods())
 app.use(userRouter.routes(), userRouter.allowedMethods())
-
+app.use(staticRouter.routes()).use(staticRouter.allowedMethods())
 let pageRouter
 if (isDev) {
   pageRouter = require('./routers/dev-ssr')
   // pageRouter = require('./routers/dev-ssr-no-bundle')
 } else {
-  pageRouter = require('./routers/prod-ssr')
+  // pageRouter = require('./routers/prod-ssr')
+  pageRouter = require('./routers/prod-ssr-no-bundle')
 }
 app.use(pageRouter.routes()).use(pageRouter.allowedMethods())
 

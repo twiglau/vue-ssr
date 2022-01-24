@@ -6,7 +6,7 @@ const merge = require('webpack-merge')
 const ExtractPlugin = require('extract-text-webpack-plugin');
 const baseConfig = require('./webpack.config.base')
 const VueClientPlugin = require('vue-server-renderer/client-plugin')
-
+const cdnConfig = require('../app.config').cdn
 const isDev = process.env.NODE_ENV === 'development';
 const defaultPlugins = [
     new webpack.DefinePlugin({
@@ -90,7 +90,7 @@ if (isDev) {
         },
         output: {
             filename:'[name].[chunkhash:8].js',
-            publicPath:'/public/', //需要更改引用路径,在正式环境中. 并且在server需要对资源路径进行处理 static.js
+            publicPath:cdnConfig.host, //需要更改引用路径,在正式环境中. 并且在server需要对资源路径进行处理 static.js
         },
         module: {
             rules:[
@@ -119,7 +119,8 @@ if (isDev) {
             }),
             new webpack.optimize.CommonsChunkPlugin({
                 name:'runtime'
-            })
+            }),
+            new webpack.NamedChunksPlugin()
         ])
     })
 }

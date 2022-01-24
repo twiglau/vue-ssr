@@ -1,5 +1,5 @@
-import Todo from '../views/todo/todo.vue'
-import Login from '../views/login/login.vue'
+// import Todo from '../views/todo/todo.vue'
+// import Login from '../views/login/login.vue'
 import Testparams from '../views/test/testparams.vue'
 import Testprops from '../views/test/testprops.vue'
 import Testrouterenter from '../views/test/testrouterenter.vue'
@@ -11,7 +11,8 @@ export default [
   },
   {
     path: '/app',
-    component: Todo, // 注意如果异步加载,会导致 dev-ssr-no-bundle 从硬盘 (执行js环境) 读取 server-entry 时,报错
+    component: () => import(/* webpackChunkName: "todo-view" */ '../views/todo/todo.vue'),
+    // component: Todo, // 注意如果异步加载,会导致 dev-ssr-no-bundle 从硬盘 (执行js环境) 读取 server-entry 时,报错
     name: 'app',
     meta: {
       title: 'This a title',
@@ -20,7 +21,8 @@ export default [
   },
   {
     path: '/login',
-    component: Login,
+    component: () => import(/* webpackChunkName: "login-view" */ '../views/login/login.vue')
+    // component: Login,
   },
   {
     path: '/test',
